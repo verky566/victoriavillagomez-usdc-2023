@@ -30,6 +30,8 @@
     return result; 
 }
 
+
+
 /** Example input object. */
 const twentyLeaguesIn = [
     {
@@ -66,6 +68,8 @@ const twentyLeaguesOut = {
         }
     ]
 }
+
+
 
 /*
  _   _ _   _ ___ _____   _____ _____ ____ _____ ____  
