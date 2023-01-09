@@ -18,18 +18,42 @@
  * @param {JSON} scannedTextObj - A JSON object representing the scanned text.
  * @returns {JSON} - Search results.
  * */ 
- function findSearchTermInBooks(searchTerm, scannedTextObj) {
-    /** You will need to implement your search and 
-     * return the appropriate object here. */
 
-    var result = {
-        "SearchTerm": "",
-        "Results": []
+
+const findSearchTermInBooks = (searchTerm, scannedTextObj) => {
+     /** You will need to implement your search and 
+    //* return the appropriate object here. */
+    const result = {
+      SearchTerm: searchTerm,
+      Results: [],
     };
-    
-    return result; 
-}
+  
+    if (!searchTerm) {
+        result;
+    }
+  // arrow func - iterate nested JSON obj with forEach & includes methods
+  
+    scannedTextObj.forEach((text) => {
+      const contentArr = text.Content;
+      contentArr.forEach((data) => {
+       // using the includes method to find the searchTerm
+        if (data.Text.includes(searchTerm)) {
+     // push matching results into func searchResult
+        result.Results.push(searchResult(text.ISBN, data));
+        }
+      });
+    });
+    return result;
+  };
 
+// arrow function contains two parameters
+// show the matching results from the function findSearchTermInBooks. 
+
+ searchResult = (ISBN, scannedObj)  => ({
+        "ISBN": ISBN,
+        "Page": scannedObj.Page,
+        "Line": scannedObj.Line
+    });
 
 
 /** Example input object. */
@@ -37,6 +61,7 @@ const twentyLeaguesIn = [
     {
         "Title": "Twenty Thousand Leagues Under the Sea",
         "ISBN": "9780000528531",
+
         "Content": [
             {
                 "Page": 31,
@@ -105,4 +130,37 @@ if (test2result.Results.length == 1) {
     console.log("FAIL: Test 2");
     console.log("Expected:", twentyLeaguesOut.Results.length);
     console.log("Received:", test2result.Results.length);
+}
+
+
+/** Positive tests: tests that return a match. */
+const test3result = findSearchTermInBooks("the", twentyLeaguesIn); 
+if (test3result.searchTerm == "the" && test3result.scannedTextObj == twentyLeaguesIn) {
+    console.log("PASS: Test 3");
+} else {
+    console.log("FAIL: Test 3");
+    console.log("Expected:", "the", twentyLeaguesOut);
+    console.log("Received:", test3result);
+}
+
+
+/** Negative tests: tests that do not return any matches. */
+const test4result = findSearchTermInBooks("the", twentyLeaguesIn); 
+if (test4result.searchTerm !== "") {
+    console.log("PASS: Test 4");
+} else {
+    console.log("FAIL: Test 4");
+    console.log("Expected:", "the");
+    console.log("Received:", test4result);
+}
+
+
+/** Case-sensitive tests: tests that match (for example) on “The” but not on “the”. */
+const test5result = findSearchTermInBooks("the", twentyLeaguesIn); 
+if (test5result.searchTerm !== "The") {
+    console.log("PASS: Test 5");
+} else {
+    console.log("FAIL: Test 5");
+    console.log("Expected:", twentyLeaguesOut.Results.length);
+    console.log("Received:", test5result.Results.length);
 }
