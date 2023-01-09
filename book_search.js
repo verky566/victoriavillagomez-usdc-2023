@@ -17,8 +17,7 @@
  * @param {string} searchTerm - The word or term we're searching for. 
  * @param {JSON} scannedTextObj - A JSON object representing the scanned text.
  * @returns {JSON} - Search results.
- * */ 
-
+ **/
 
 const findSearchTermInBooks = (searchTerm, scannedTextObj) => {
      /** You will need to implement your search and 
@@ -46,7 +45,7 @@ const findSearchTermInBooks = (searchTerm, scannedTextObj) => {
     return result;
   };
 
-// arrow function contains two parameters
+// arrow func with two parameters
 // show the matching results from the function findSearchTermInBooks. 
 
  searchResult = (ISBN, scannedObj)  => ({
@@ -134,19 +133,22 @@ if (test2result.Results.length == 1) {
 
 
 /** Positive tests: tests that return a match. */
+//This should return a pass result. This exists in our JSON object. 
+
 const test3result = findSearchTermInBooks("the", twentyLeaguesIn); 
-if (test3result.searchTerm == "the" && test3result.scannedTextObj == twentyLeaguesIn) {
+if (JSON.stringify(twentyLeaguesOut) === JSON.stringify(test3result)) {
     console.log("PASS: Test 3");
 } else {
     console.log("FAIL: Test 3");
-    console.log("Expected:", "the", twentyLeaguesOut);
+    console.log("Expected:", twentyLeaguesOut);
     console.log("Received:", test3result);
 }
 
 
 /** Negative tests: tests that do not return any matches. */
-const test4result = findSearchTermInBooks("the", twentyLeaguesIn); 
-if (test4result.searchTerm !== "") {
+//input the term "cat". This should return a fail result. 
+const test4result = findSearchTermInBooks("cat", twentyLeaguesIn); 
+if (JSON.stringify(twentyLeaguesOut) === JSON.stringify(test4result)) {
     console.log("PASS: Test 4");
 } else {
     console.log("FAIL: Test 4");
@@ -156,8 +158,9 @@ if (test4result.searchTerm !== "") {
 
 
 /** Case-sensitive tests: tests that match (for example) on “The” but not on “the”. */
-const test5result = findSearchTermInBooks("the", twentyLeaguesIn); 
-if (test5result.searchTerm !== "The") {
+//Uppercase "T" should return a false result. 
+const test5result = findSearchTermInBooks("The", twentyLeaguesIn); 
+if (JSON.stringify(twentyLeaguesOut) === JSON.stringify(test5result)) {
     console.log("PASS: Test 5");
 } else {
     console.log("FAIL: Test 5");
